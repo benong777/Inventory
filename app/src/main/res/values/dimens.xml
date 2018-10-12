@@ -1,0 +1,13 @@
+<resources>
+    <!-- Margin around the floating action button in MainActivity -->
+    <dimen name="fab_margin">16dp</dimen>
+
+    <!-- Margin -->
+    <dimen name="activity_margin">16dp</dimen>
+
+    <!-- Padding -->
+    <dimen name="paddingSmall">4dp</dimen>
+    <dimen name="paddingMedium">8dp</dimen>
+    <dimen name="paddingLarge">16dp</dimen>
+    <dimen name="paddingXLarge">24dp</dimen>
+</resources>
