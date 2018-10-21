@@ -21,7 +21,10 @@
     <string name="action_delete_all_entries">Delete All Books</string>
 
     <!-- Title for the activity to add a new book [CHAR LIMIT=20] -->
-    <string name="editor_activity_title_new_book">Add a Book</string>
+    <string name="editor_activity_title_new_book">Add a New Item</string>
+
+    <!-- Title for the activity to edit an existing book [CHAR LIMIT=20] -->
+    <string name="editor_activity_title_edit_book">Edit Item</string>
 
     <!-- Label for editor menu option to save book and leave editor [CHAR LIMIT=20] -->
     <string name="action_save">Save</string>
@@ -31,9 +34,6 @@
 
     <!-- Label for overview category of attributes in the editor [CHAR LIMIT=30] -->
     <string name="category_overview">Overview</string>
-
-    <!-- Label for gender information in the editor [CHAR LIMIT=30] -->
-    <string name="category_gender">Gender</string>
 
     <!-- Label for the current stock information in the editor [CHAR LIMIT=30] -->
     <string name="category_stock">Stock</string>
@@ -52,4 +52,31 @@
 
     <!-- Text hint for name field in the editor [CHAR LIMIT=30] -->
     <string name="hint_book_supplier">Supplier</string>
+
+    <!-- Toast message in editor when new pet has been successfully inserted [CHAR LIMIT=NONE] -->
+    <string name="editor_insert_item_successful">Item saved</string>
+
+    <!-- Toast message in editor when new item has failed to be inserted [CHAR LIMIT=NONE] -->
+    <string name="editor_insert_item_failed">Error with saving item</string>
+
+    <!-- Toast message in editor when new pet has been successfully updated [CHAR LIMIT=NONE] -->
+    <string name="editor_update_item_successful">Item updated</string>
+
+    <!-- Toast message in editor when new item has failed to be updated [CHAR LIMIT=NONE] -->
+    <string name="editor_update_item_failed">Error when updating item</string>
+
+    <!-- Title text for the empty view, which describes the empty dog house image [CHAR LIMIT=50] -->
+    <string name="empty_view_title_text">It\\\'s a bit lonely here...</string>
+
+    <!-- Subtitle text for the empty view that prompts the user to add an item [CHAR LIMIT=50] -->
+    <string name="empty_view_subtitle_text">Get started by adding an item</string>
+
+    <!-- Dialog message when user is leaving editor but hasn't saved changes [CHAR LIMIT=NONE] -->
+    <string name="unsaved_changes_dialog_msg">Discard your changes and quit editing?</string>
+
+    <!-- Dialog button text for the option to discard a user's changes [CHAR LIMIT=20] -->
+    <string name="discard">Discard</string>
+
+    <!-- Dialog button text for the option to keep editing the current pet [CHAR LIMIT=20] -->
+    <string name="keep_editing">Keep Editing</string>
 </resources>
