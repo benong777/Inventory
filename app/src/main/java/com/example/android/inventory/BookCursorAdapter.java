@@ -56,24 +56,24 @@ public class BookCursorAdapter extends CursorAdapter {
     public void bindView(View view, Context context, Cursor cursor) {
         // Find individual views that we want to modify in the list item layout
         TextView titleTextView = (TextView) view.findViewById(R.id.title);
-        TextView authorTextView = (TextView) view.findViewById(R.id.author);
+        TextView quantityTextView = (TextView) view.findViewById(R.id.quantity);
 
         // Find the columns of the attributes that we're interested in
         int titleColumnIndex = cursor.getColumnIndex(BookContract.BookEntry.COLUMN_BOOK_TITLE);
-        int authorColumnIndex = cursor.getColumnIndex(BookContract.BookEntry.COLUMN_BOOK_AUTHOR);
+        int quantityColumnIndex = cursor.getColumnIndex(BookContract.BookEntry.COLUMN_BOOK_QUANTITY);
 
         // Read the attributes from the Cursor for the current item
         String bookTitle = cursor.getString(titleColumnIndex);
-        String bookAuthor = cursor.getString(authorColumnIndex);
+        String bookQuantity = cursor.getString(quantityColumnIndex);
 
-        // If the pet breed is empty string or null, then use some default text
+        // If the quantity is empty string or null, then use some default text
         // that says "Unknown breed", so the TextView isn't blank.
-        if (TextUtils.isEmpty(bookAuthor)) {
-            bookAuthor = context.getString(R.string.unknown_author);
+        if (TextUtils.isEmpty(bookTitle)) {
+            bookTitle = context.getString(R.string.unknown_title);
         }
 
         // Update the TextViews with the attributes for the current item
         titleTextView.setText(bookTitle);
-        authorTextView.setText(String.valueOf(bookAuthor));
+        quantityTextView.setText(String.valueOf(bookQuantity));
     }
 }

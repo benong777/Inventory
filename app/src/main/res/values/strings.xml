@@ -96,5 +96,5 @@
     <string name="cancel">Cancel</string>
 
     <!-- Label for the author if it is unknown [CHAR LIMIT=20] -->
-    <string name="unknown_author">Unknown author</string>
+    <string name="unknown_title">Unknown Title</string>
 </resources>
