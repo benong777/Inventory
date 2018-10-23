@@ -36,13 +36,6 @@
                 android:inputType="textCapWords"
                 style="@style/EditorFieldStyle" />
 
-            <!-- Author field -->
-            <EditText
-                android:id="@+id/edit_book_author"
-                android:hint="@string/hint_book_author"
-                android:inputType="textCapWords"
-                style="@style/EditorFieldStyle" />
-
             <!-- Price field -->
             <EditText
                 android:id="@+id/edit_book_price"

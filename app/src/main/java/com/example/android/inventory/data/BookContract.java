@@ -51,10 +51,6 @@ public class BookContract {
          ** Type: TEXT  */
         public final static String COLUMN_BOOK_TITLE ="title";
 
-        /** Author
-         ** Type: TEXT  */
-        public final static String COLUMN_BOOK_AUTHOR ="author";
-
         /** Price
          ** Type: TEXT  */
         //public final static String COLUMN_BOOK_PRICE = "price";

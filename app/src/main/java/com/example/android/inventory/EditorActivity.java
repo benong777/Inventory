@@ -45,9 +45,6 @@ public class EditorActivity extends AppCompatActivity implements LoaderManager.L
     /** EditText field to enter the book's title */
     private EditText mTitleEditText;
 
-    /** EditText field to enter the book's author */
-    private EditText mAuthorEditText;
-
     /** EditText field to enter the book's price */
     private EditText mPriceEditText;
 
@@ -103,7 +100,6 @@ public class EditorActivity extends AppCompatActivity implements LoaderManager.L
 
         // Find all relevant views that we will need to read user input from
         mTitleEditText = (EditText) findViewById(R.id.edit_book_title);
-        mAuthorEditText = (EditText) findViewById(R.id.edit_book_author);
         mPriceEditText = (EditText) findViewById(R.id.edit_book_price);
         mSupplierEditText = (EditText) findViewById(R.id.edit_book_supplier);
         mQuantityEditText = (EditText) findViewById(R.id.edit_book_quantity);
@@ -112,7 +108,6 @@ public class EditorActivity extends AppCompatActivity implements LoaderManager.L
         // has touched or modified them. This will let us know if there are unsaved changes
         // or not, if the user tries to leave the editor without saving.
         mTitleEditText.setOnTouchListener(mTouchListener);
-        mAuthorEditText.setOnTouchListener(mTouchListener);
         mPriceEditText.setOnTouchListener(mTouchListener);
         mSupplierEditText.setOnTouchListener(mTouchListener);
         mQuantityEditText.setOnTouchListener(mTouchListener);
@@ -125,7 +120,6 @@ public class EditorActivity extends AppCompatActivity implements LoaderManager.L
         // Read from input fields
         // Use trim() to remove leading and trailing whitespaces
         String titleString = mTitleEditText.getText().toString().trim();
-        String authorString = mAuthorEditText.getText().toString().trim();
         String priceString = mPriceEditText.getText().toString();
         String supplierString = mSupplierEditText.getText().toString().trim();
         String quantityString = mQuantityEditText.getText().toString().trim();
@@ -151,7 +145,7 @@ public class EditorActivity extends AppCompatActivity implements LoaderManager.L
         // AND check if all the fields in the editor are blank.
         // If so, then exit without saving.
         if (mCurrentItemUri == null && TextUtils.isEmpty(titleString) &&
-                TextUtils.isEmpty(authorString) && TextUtils.isEmpty(priceString) &&
+                TextUtils.isEmpty(priceString) &&
                 TextUtils.isEmpty(supplierString) && TextUtils.isEmpty(quantityString)) {
             return;
         }
@@ -160,7 +154,6 @@ public class EditorActivity extends AppCompatActivity implements LoaderManager.L
         // and the book attributes are the values.
         ContentValues values = new ContentValues();
         values.put(BookEntry.COLUMN_BOOK_TITLE, titleString);
-        values.put(BookEntry.COLUMN_BOOK_AUTHOR, authorString);
         values.put(BookEntry.COLUMN_BOOK_PRICE, price);
         values.put(BookEntry.COLUMN_BOOK_QUANTITY, quantity);
         values.put(BookEntry.COLUMN_BOOK_SUPPLIER, supplierString);
@@ -308,7 +301,6 @@ public class EditorActivity extends AppCompatActivity implements LoaderManager.L
         String[] projection = {
                 BookEntry._ID,
                 BookEntry.COLUMN_BOOK_TITLE,
-                BookEntry.COLUMN_BOOK_AUTHOR,
                 BookEntry.COLUMN_BOOK_PRICE,
                 BookEntry.COLUMN_BOOK_QUANTITY,
                 BookEntry.COLUMN_BOOK_SUPPLIER };
@@ -334,14 +326,12 @@ public class EditorActivity extends AppCompatActivity implements LoaderManager.L
         if (cursor.moveToFirst()) {
             // Find the columns of pet attributes that we're interested in
             int titleColumnIndex = cursor.getColumnIndex(BookEntry.COLUMN_BOOK_TITLE);
-            int authorColumnIndex = cursor.getColumnIndex(BookEntry.COLUMN_BOOK_AUTHOR);
             int priceColumnIndex = cursor.getColumnIndex(BookEntry.COLUMN_BOOK_PRICE);
             int quantityColumnIndex = cursor.getColumnIndex(BookEntry.COLUMN_BOOK_QUANTITY);
             int supplierColumnIndex = cursor.getColumnIndex(BookEntry.COLUMN_BOOK_SUPPLIER);
 
             // Extract out the value from the Cursor for the given column index
             String title = cursor.getString(titleColumnIndex);
-            String author = cursor.getString(authorColumnIndex);
             String supplier = cursor.getString(supplierColumnIndex);
 
             double price = cursor.getDouble(priceColumnIndex);
@@ -353,7 +343,6 @@ public class EditorActivity extends AppCompatActivity implements LoaderManager.L
 
             // Update the views on the screen with the values from the database
             mTitleEditText.setText(title);
-            mAuthorEditText.setText(author);
             mPriceEditText.setText(priceString);
             mQuantityEditText.setText(Integer.toString(quantity));
             mSupplierEditText.setText(supplier);
@@ -364,7 +353,6 @@ public class EditorActivity extends AppCompatActivity implements LoaderManager.L
     public void onLoaderReset(Loader<Cursor> loader) {
         // If the loader is invalidated, clear out all the data from the input fields.
         mTitleEditText.setText("");
-        mAuthorEditText.setText("");
         mPriceEditText.setText("");
         mQuantityEditText.setText("");
         mSupplierEditText.setText("");

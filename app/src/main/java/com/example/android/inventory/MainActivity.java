@@ -95,7 +95,6 @@ public class MainActivity extends AppCompatActivity implements LoaderManager.Loa
         // and example book attributes are the values.
         ContentValues values = new ContentValues();
         values.put(BookEntry.COLUMN_BOOK_TITLE, "Outliers");
-        values.put(BookEntry.COLUMN_BOOK_AUTHOR, "Tom Clancy");
         values.put(BookEntry.COLUMN_BOOK_PRICE, 18.95);
         values.put(BookEntry.COLUMN_BOOK_SUPPLIER, "Amazon");
         values.put(BookEntry.COLUMN_BOOK_QUANTITY, 30);

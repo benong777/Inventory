@@ -130,7 +130,6 @@ public class BookProvider extends ContentProvider {
     private Uri insertBook(Uri uri, ContentValues values) {
         // Check that the title, author and supplier are not NULL!
         String title = values.getAsString(BookEntry.COLUMN_BOOK_TITLE);
-        String author = values.getAsString(BookEntry.COLUMN_BOOK_AUTHOR);
         String supplier = values.getAsString(BookEntry.COLUMN_BOOK_SUPPLIER);
         Integer quantity = values.getAsInteger(BookEntry.COLUMN_BOOK_QUANTITY);
         Double price = values.getAsDouble(BookEntry.COLUMN_BOOK_PRICE);
@@ -138,9 +137,6 @@ public class BookProvider extends ContentProvider {
         // Check that the title, author and supplier are not NULL!
         if (title == null) {
             throw new IllegalArgumentException("The title is required");
-        }
-        if (author == null) {
-            throw new IllegalArgumentException("The author is required");
         }
         if (supplier == null) {
             throw new IllegalArgumentException("The supplier is required");
@@ -208,14 +204,6 @@ public class BookProvider extends ContentProvider {
             String name = values.getAsString(BookEntry.COLUMN_BOOK_TITLE);
             if (name == null) {
                 throw new IllegalArgumentException("A title is required");
-            }
-        }
-        // If the {@link BookEntry#COLUMN_BOOK_AUTHOR} key is present,
-        // check that the name value is not null.
-        if (values.containsKey(BookEntry.COLUMN_BOOK_AUTHOR)) {
-            String name = values.getAsString(BookEntry.COLUMN_BOOK_AUTHOR);
-            if (name == null) {
-                throw new IllegalArgumentException("The author is required");
             }
         }
         // If the {@link BookEntry#COLUMN_BOOK_PRICE} key is present,
