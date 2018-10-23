@@ -57,6 +57,7 @@ public class BookContract {
 
         /** Price
          ** Type: TEXT  */
+        //public final static String COLUMN_BOOK_PRICE = "price";
         public final static String COLUMN_BOOK_PRICE = "price";
 
         /** Quantity

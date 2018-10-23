@@ -126,7 +126,7 @@ public class EditorActivity extends AppCompatActivity implements LoaderManager.L
         // Use trim() to remove leading and trailing whitespaces
         String titleString = mTitleEditText.getText().toString().trim();
         String authorString = mAuthorEditText.getText().toString().trim();
-        String priceString = mPriceEditText.getText().toString().trim();
+        String priceString = mPriceEditText.getText().toString();
         String supplierString = mSupplierEditText.getText().toString().trim();
         String quantityString = mQuantityEditText.getText().toString().trim();
 
@@ -136,6 +136,9 @@ public class EditorActivity extends AppCompatActivity implements LoaderManager.L
         if (!TextUtils.isEmpty(priceString)) {
             price = Float.parseFloat(priceString);
         }
+
+        Log.v("CatalogActivity", "Price: " + price);
+
 
         // If the quantity is not provided by the user, don't try to parse the string into an
         // integer value. Use 0 by default.
@@ -355,14 +358,18 @@ public class EditorActivity extends AppCompatActivity implements LoaderManager.L
             // Extract out the value from the Cursor for the given column index
             String title = cursor.getString(titleColumnIndex);
             String author = cursor.getString(authorColumnIndex);
-            float price = cursor.getInt(priceColumnIndex);
-            int quantity = cursor.getInt(quantityColumnIndex);
             String supplier = cursor.getString(supplierColumnIndex);
+
+            double price = cursor.getDouble(priceColumnIndex);
+            DecimalFormat priceDecimal = new DecimalFormat ("#.##");
+            String priceString = priceDecimal.format(price);
+
+            int quantity = cursor.getInt(quantityColumnIndex);
 
             // Update the views on the screen with the values from the database
             mTitleEditText.setText(title);
             mAuthorEditText.setText(author);
-            mPriceEditText.setText(Float.toString(price));
+            mPriceEditText.setText(priceString);
             mQuantityEditText.setText(Integer.toString(quantity));
             mSupplierEditText.setText(supplier);
         }

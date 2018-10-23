@@ -47,7 +47,7 @@
             <EditText
                 android:id="@+id/edit_book_price"
                 android:hint="@string/hint_book_price"
-                android:inputType="textCapWords"
+                android:inputType="numberDecimal"
                 style="@style/EditorFieldStyle" />
 
             <!-- Supplier field -->

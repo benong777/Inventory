@@ -133,7 +133,10 @@ public class BookProvider extends ContentProvider {
         String author = values.getAsString(BookEntry.COLUMN_BOOK_AUTHOR);
         String supplier = values.getAsString(BookEntry.COLUMN_BOOK_SUPPLIER);
         Integer quantity = values.getAsInteger(BookEntry.COLUMN_BOOK_QUANTITY);
-        Float price = values.getAsFloat(BookEntry.COLUMN_BOOK_PRICE);
+        Double price = values.getAsDouble(BookEntry.COLUMN_BOOK_PRICE);
+
+        Log.e(LOG_TAG, "INSERT BOOK Method - Price: " + price);
+
 
         // Check that the title, author and supplier are not NULL!
         if (title == null) {
@@ -221,7 +224,7 @@ public class BookProvider extends ContentProvider {
         // If the {@link BookEntry#COLUMN_BOOK_PRICE} key is present,
         // check that the gender value is valid.
         if (values.containsKey(BookEntry.COLUMN_BOOK_PRICE)) {
-            Float price = values.getAsFloat(BookEntry.COLUMN_BOOK_PRICE);
+            Double price = values.getAsDouble(BookEntry.COLUMN_BOOK_PRICE);
             if (price == null || price < 0) {
                 throw new IllegalArgumentException("The price is required");
             }
