@@ -135,9 +135,6 @@ public class BookProvider extends ContentProvider {
         Integer quantity = values.getAsInteger(BookEntry.COLUMN_BOOK_QUANTITY);
         Double price = values.getAsDouble(BookEntry.COLUMN_BOOK_PRICE);
 
-        Log.e(LOG_TAG, "INSERT BOOK Method - Price: " + price);
-
-
         // Check that the title, author and supplier are not NULL!
         if (title == null) {
             throw new IllegalArgumentException("The title is required");
@@ -245,9 +242,6 @@ public class BookProvider extends ContentProvider {
 
         // Otherwise, get writeable database to update the data
         SQLiteDatabase database = mDbHelper.getWritableDatabase();
-
-        // Returns the number of database rows affected by the update statement
-        //return database.update(BookEntry.TABLE_NAME, values, selection, selectionArgs);
 
         // Perform the update on the database and get the number of rows affected
         int rowsUpdated = database.update(BookEntry.TABLE_NAME, values, selection, selectionArgs);

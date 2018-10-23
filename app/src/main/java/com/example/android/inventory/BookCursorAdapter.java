@@ -11,6 +11,8 @@ import android.widget.TextView;
 
 import com.example.android.inventory.data.BookContract;
 
+import java.text.DecimalFormat;
+
 /**
  * {@link BookCursorAdapter} is an adapter for a list or grid view
  * that uses a {@link Cursor} of book data as its data source. This adapter knows
@@ -56,15 +58,24 @@ public class BookCursorAdapter extends CursorAdapter {
     public void bindView(View view, Context context, Cursor cursor) {
         // Find individual views that we want to modify in the list item layout
         TextView titleTextView = (TextView) view.findViewById(R.id.title);
+        TextView priceTextView = (TextView) view.findViewById(R.id.price);
         TextView quantityTextView = (TextView) view.findViewById(R.id.quantity);
 
         // Find the columns of the attributes that we're interested in
         int titleColumnIndex = cursor.getColumnIndex(BookContract.BookEntry.COLUMN_BOOK_TITLE);
+        int priceColumnIndex = cursor.getColumnIndex(BookContract.BookEntry.COLUMN_BOOK_PRICE);
         int quantityColumnIndex = cursor.getColumnIndex(BookContract.BookEntry.COLUMN_BOOK_QUANTITY);
 
         // Read the attributes from the Cursor for the current item
         String bookTitle = cursor.getString(titleColumnIndex);
         String bookQuantity = cursor.getString(quantityColumnIndex);
+        //String bookPrice = cursor.getString(priceColumnIndex);
+        //DecimalFormat priceDecimal = new DecimalFormat ("$#.##");
+        //String priceString = priceDecimal.format(bookPrice);
+
+        double price = cursor.getDouble(priceColumnIndex);
+        DecimalFormat priceDecimal = new DecimalFormat ("$#.##");
+        String priceString = priceDecimal.format(price);
 
         // If the quantity is empty string or null, then use some default text
         // that says "Unknown breed", so the TextView isn't blank.
@@ -74,6 +85,7 @@ public class BookCursorAdapter extends CursorAdapter {
 
         // Update the TextViews with the attributes for the current item
         titleTextView.setText(bookTitle);
+        priceTextView.setText(priceString);
         quantityTextView.setText(String.valueOf(bookQuantity));
     }
 }

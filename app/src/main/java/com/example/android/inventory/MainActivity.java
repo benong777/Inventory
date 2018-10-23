@@ -149,6 +149,7 @@ public class MainActivity extends AppCompatActivity implements LoaderManager.Loa
         String[] projection = {
                 BookEntry._ID,                 // _ID needed. CursorAdapter assumes it contains an _id column
                 BookEntry.COLUMN_BOOK_TITLE,
+                BookEntry.COLUMN_BOOK_PRICE,
                 BookEntry.COLUMN_BOOK_QUANTITY };
 
         // This loader will execute the ContentProvider's query method on a background thread

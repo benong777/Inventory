@@ -134,7 +134,7 @@ public class EditorActivity extends AppCompatActivity implements LoaderManager.L
         // float value. Use 0 by default.
         double price = 0.00;
         if (!TextUtils.isEmpty(priceString)) {
-            price = Float.parseFloat(priceString);
+            price = Double.parseDouble(priceString);
         }
 
         Log.v("CatalogActivity", "Price: " + price);
@@ -165,23 +165,7 @@ public class EditorActivity extends AppCompatActivity implements LoaderManager.L
         values.put(BookEntry.COLUMN_BOOK_QUANTITY, quantity);
         values.put(BookEntry.COLUMN_BOOK_SUPPLIER, supplierString);
 
-        /**
-        // Insert a new pet into the provider, returning the content URI for the new pet.
-        Uri newUri = getContentResolver().insert(BookEntry.CONTENT_URI, values);
-
-        // Show a toast message depending on whether or not the insertion was successful
-        if (newUri == null) {
-            // If the new content URI is null, then there was an error with insertion.
-            Toast.makeText(this, getString(R.string.editor_insert_pet_failed),
-                    Toast.LENGTH_SHORT).show();
-        } else {
-            // Otherwise, the insertion was successful and we can display a toast.
-            Toast.makeText(this, getString(R.string.editor_insert_pet_successful),
-                    Toast.LENGTH_SHORT).show();
-        }
-         */
-
-        // Determine if this is a new or existing pet by checking if mCurrentPetUri is null or not
+        // Determine if this is a new or existing item by checking if mCurrentItemUri is null or not
         if (mCurrentItemUri == null) {
             // This is a NEW item, so insert a new item into the provider,
             // returning the content URI for the new item.
@@ -361,6 +345,7 @@ public class EditorActivity extends AppCompatActivity implements LoaderManager.L
             String supplier = cursor.getString(supplierColumnIndex);
 
             double price = cursor.getDouble(priceColumnIndex);
+            //DecimalFormat priceDecimal = new DecimalFormat ("$#.##");
             DecimalFormat priceDecimal = new DecimalFormat ("#.##");
             String priceString = priceDecimal.format(price);
 
