@@ -97,4 +97,7 @@
 
     <!-- Label for the title if it is unknown [CHAR LIMIT=20] -->
     <string name="unknown_title">Unknown Title</string>
+
+    <!-- Out of Stock Label [CHAR LIMIT=20] -->
+    <string name="toast_out_of_stock">Out of Stock</string>
 </resources>

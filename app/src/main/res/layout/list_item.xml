@@ -32,9 +32,10 @@
         android:textColor="#AEB6BD"  />
 
     <Button
+        android:id="@+id/sale_button"
         android:layout_width="48dp"
         android:layout_height="48dp"
         android:layout_marginLeft="8dp"
-        android:onClick="sold"
+        android:onClick="sell"
         android:text="S" />
 </LinearLayout>

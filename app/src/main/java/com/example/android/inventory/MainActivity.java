@@ -23,7 +23,6 @@ import android.widget.Toast;
 
 import com.example.android.inventory.data.BookDbHelper;
 import com.example.android.inventory.data.BookContract.BookEntry;
-import com.example.android.inventory.EditorActivity;
 
 
 /**
