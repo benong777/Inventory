@@ -128,18 +128,21 @@ public class BookProvider extends ContentProvider {
      * for that specific row in the database.
      */
     private Uri insertBook(Uri uri, ContentValues values) {
-        // Check that the title, author and supplier are not NULL!
         String title = values.getAsString(BookEntry.COLUMN_BOOK_TITLE);
         String supplier = values.getAsString(BookEntry.COLUMN_BOOK_SUPPLIER);
+        String supplier_phone = values.getAsString(BookEntry.COLUMN_BOOK_SUPPLIER_PHONE);
         Integer quantity = values.getAsInteger(BookEntry.COLUMN_BOOK_QUANTITY);
         Double price = values.getAsDouble(BookEntry.COLUMN_BOOK_PRICE);
 
-        // Check that the title, author and supplier are not NULL!
+        // Check that the title, supplier and phone_num are not NULL!
         if (title == null) {
             throw new IllegalArgumentException("The title is required");
         }
         if (supplier == null) {
             throw new IllegalArgumentException("The supplier is required");
+        }
+        if (supplier_phone == null) {
+            throw new IllegalArgumentException("The supplier phone number is required");
         }
         if (quantity == null || quantity < 0) {
             throw new IllegalArgumentException("The quantity must be greater than 0");
@@ -207,20 +210,27 @@ public class BookProvider extends ContentProvider {
             }
         }
         // If the {@link BookEntry#COLUMN_BOOK_PRICE} key is present,
-        // check that the gender value is valid.
+        // check that the price value is valid.
         if (values.containsKey(BookEntry.COLUMN_BOOK_PRICE)) {
             Double price = values.getAsDouble(BookEntry.COLUMN_BOOK_PRICE);
             if (price == null || price < 0) {
                 throw new IllegalArgumentException("The price is required");
             }
         }
-
         // If the {@link BookEntry#COLUMN_BOOK_SUPPLIER} key is present,
-        // check that the name value is not null.
+        // check that the supplier value is not null.
         if (values.containsKey(BookEntry.COLUMN_BOOK_SUPPLIER)) {
-            String name = values.getAsString(BookEntry.COLUMN_BOOK_SUPPLIER);
-            if (name == null) {
+            String supplier = values.getAsString(BookEntry.COLUMN_BOOK_SUPPLIER);
+            if (supplier == null) {
                 throw new IllegalArgumentException("The supplier is required");
+            }
+        }
+        // If the {@link BookEntry#COLUMN_BOOK_SUPPLIER_PHONE} key is present,
+        // check that the phone value is not null.
+        if (values.containsKey(BookEntry.COLUMN_BOOK_SUPPLIER_PHONE)) {
+            String supplier_phone = values.getAsString(BookEntry.COLUMN_BOOK_SUPPLIER_PHONE);
+            if (supplier_phone == null) {
+                throw new IllegalArgumentException("The supplier phone number is required");
             }
         }
         // If there are no values to update, then don't try to update the database

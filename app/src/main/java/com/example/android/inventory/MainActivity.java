@@ -19,6 +19,7 @@ import android.view.View;
 import android.widget.AdapterView;
 import android.widget.ListView;
 import android.widget.TextView;
+import android.widget.Toast;
 
 import com.example.android.inventory.data.BookDbHelper;
 import com.example.android.inventory.data.BookContract.BookEntry;
@@ -97,6 +98,7 @@ public class MainActivity extends AppCompatActivity implements LoaderManager.Loa
         values.put(BookEntry.COLUMN_BOOK_TITLE, "Outliers");
         values.put(BookEntry.COLUMN_BOOK_PRICE, 18.95);
         values.put(BookEntry.COLUMN_BOOK_SUPPLIER, "Amazon");
+        values.put(BookEntry.COLUMN_BOOK_SUPPLIER_PHONE, "0123456789");
         values.put(BookEntry.COLUMN_BOOK_QUANTITY, 30);
 
 
@@ -171,4 +173,17 @@ public class MainActivity extends AppCompatActivity implements LoaderManager.Loa
         // Callback called when the data needs to be deleted
         mCursorAdapter.swapCursor(null);
     }
+
+    /**
+    public void increment(View view) {
+        if (quantity == 100) {
+            // Show an error message as a toast
+            Toast.makeText(this, "Maximum is 100", Toast.LENGTH_SHORT).show();
+            // Exit early since there's nothing else to do
+            return;
+        }
+        quantity = quantity + 1;
+        //displayQuantity(quantity);
+    }
+     */
 }

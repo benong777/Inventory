@@ -23,6 +23,7 @@ import android.widget.AdapterView;
 import android.widget.ArrayAdapter;
 import android.widget.EditText;
 import android.widget.Spinner;
+import android.widget.TextView;
 import android.widget.Toast;
 
 import com.example.android.inventory.data.BookContract.BookEntry;
@@ -42,6 +43,9 @@ public class EditorActivity extends AppCompatActivity implements LoaderManager.L
     /** Content URI for the existing pet (null if it's a new pet) */
     private Uri mCurrentItemUri;
 
+    /** Global variables */
+    private int quantity;
+
     /** EditText field to enter the book's title */
     private EditText mTitleEditText;
 
@@ -50,6 +54,9 @@ public class EditorActivity extends AppCompatActivity implements LoaderManager.L
 
     /** EditText field to enter the book's supplier */
     private EditText mSupplierEditText;
+
+    /** EditText field to enter the supplier's phone number */
+    private EditText mSupplierPhoneEditText;
 
     /** EditText field to enter the quantity */
     private EditText mQuantityEditText;
@@ -102,6 +109,7 @@ public class EditorActivity extends AppCompatActivity implements LoaderManager.L
         mTitleEditText = (EditText) findViewById(R.id.edit_book_title);
         mPriceEditText = (EditText) findViewById(R.id.edit_book_price);
         mSupplierEditText = (EditText) findViewById(R.id.edit_book_supplier);
+        mSupplierPhoneEditText = (EditText) findViewById(R.id.edit_book_supplier_phone);
         mQuantityEditText = (EditText) findViewById(R.id.edit_book_quantity);
 
         // Setup OnTouchListeners on all the input fields, so we can determine if the user
@@ -110,7 +118,11 @@ public class EditorActivity extends AppCompatActivity implements LoaderManager.L
         mTitleEditText.setOnTouchListener(mTouchListener);
         mPriceEditText.setOnTouchListener(mTouchListener);
         mSupplierEditText.setOnTouchListener(mTouchListener);
+        mSupplierPhoneEditText.setOnTouchListener(mTouchListener);
         mQuantityEditText.setOnTouchListener(mTouchListener);
+
+        //String    currentQuantityString  = mQuantityEditText.getText().toString();
+        //quantity = Integer.parseInt(mQuantityEditText.getText().toString());
     }
 
     /**
@@ -120,8 +132,9 @@ public class EditorActivity extends AppCompatActivity implements LoaderManager.L
         // Read from input fields
         // Use trim() to remove leading and trailing whitespaces
         String titleString = mTitleEditText.getText().toString().trim();
-        String priceString = mPriceEditText.getText().toString();
+        String priceString = mPriceEditText.getText().toString().trim();
         String supplierString = mSupplierEditText.getText().toString().trim();
+        String supplierPhoneString = mSupplierPhoneEditText.getText().toString().trim();
         String quantityString = mQuantityEditText.getText().toString().trim();
 
         // If the price is not provided by the user, don't try to parse the string into an
@@ -136,7 +149,7 @@ public class EditorActivity extends AppCompatActivity implements LoaderManager.L
 
         // If the quantity is not provided by the user, don't try to parse the string into an
         // integer value. Use 0 by default.
-        int quantity = 0;
+        //int quantity = 0;
         if (!TextUtils.isEmpty(quantityString)) {
             quantity = Integer.parseInt(quantityString);
         }
@@ -145,8 +158,8 @@ public class EditorActivity extends AppCompatActivity implements LoaderManager.L
         // AND check if all the fields in the editor are blank.
         // If so, then exit without saving.
         if (mCurrentItemUri == null && TextUtils.isEmpty(titleString) &&
-                TextUtils.isEmpty(priceString) &&
-                TextUtils.isEmpty(supplierString) && TextUtils.isEmpty(quantityString)) {
+                TextUtils.isEmpty(priceString) && TextUtils.isEmpty(supplierString) &&
+                TextUtils.isEmpty(supplierPhoneString) && TextUtils.isEmpty(quantityString)) {
             return;
         }
 
@@ -157,6 +170,8 @@ public class EditorActivity extends AppCompatActivity implements LoaderManager.L
         values.put(BookEntry.COLUMN_BOOK_PRICE, price);
         values.put(BookEntry.COLUMN_BOOK_QUANTITY, quantity);
         values.put(BookEntry.COLUMN_BOOK_SUPPLIER, supplierString);
+        values.put(BookEntry.COLUMN_BOOK_SUPPLIER_PHONE, supplierPhoneString);
+
 
         // Determine if this is a new or existing item by checking if mCurrentItemUri is null or not
         if (mCurrentItemUri == null) {
@@ -296,14 +311,15 @@ public class EditorActivity extends AppCompatActivity implements LoaderManager.L
 
     @Override
     public Loader<Cursor> onCreateLoader(int id, Bundle args) {
-// Since the editor shows all pet attributes, define a projection that contains
-        // all columns from the pet table
+        // Since the editor shows all attributes, define a projection that contains
+        // all columns from the table
         String[] projection = {
                 BookEntry._ID,
                 BookEntry.COLUMN_BOOK_TITLE,
                 BookEntry.COLUMN_BOOK_PRICE,
                 BookEntry.COLUMN_BOOK_QUANTITY,
-                BookEntry.COLUMN_BOOK_SUPPLIER };
+                BookEntry.COLUMN_BOOK_SUPPLIER,
+                BookEntry.COLUMN_BOOK_SUPPLIER_PHONE };
 
         // This loader will execute the ContentProvider's query method on a background thread
         return new CursorLoader(this,   // Parent activity context
@@ -329,10 +345,12 @@ public class EditorActivity extends AppCompatActivity implements LoaderManager.L
             int priceColumnIndex = cursor.getColumnIndex(BookEntry.COLUMN_BOOK_PRICE);
             int quantityColumnIndex = cursor.getColumnIndex(BookEntry.COLUMN_BOOK_QUANTITY);
             int supplierColumnIndex = cursor.getColumnIndex(BookEntry.COLUMN_BOOK_SUPPLIER);
+            int supplierPhoneColumnIndex = cursor.getColumnIndex(BookEntry.COLUMN_BOOK_SUPPLIER_PHONE);
 
             // Extract out the value from the Cursor for the given column index
             String title = cursor.getString(titleColumnIndex);
             String supplier = cursor.getString(supplierColumnIndex);
+            String supplierPhone = cursor.getString(supplierPhoneColumnIndex);
 
             double price = cursor.getDouble(priceColumnIndex);
             //DecimalFormat priceDecimal = new DecimalFormat ("$#.##");
@@ -346,6 +364,7 @@ public class EditorActivity extends AppCompatActivity implements LoaderManager.L
             mPriceEditText.setText(priceString);
             mQuantityEditText.setText(Integer.toString(quantity));
             mSupplierEditText.setText(supplier);
+            mSupplierPhoneEditText.setText(supplierPhone);
         }
     }
 
@@ -356,6 +375,7 @@ public class EditorActivity extends AppCompatActivity implements LoaderManager.L
         mPriceEditText.setText("");
         mQuantityEditText.setText("");
         mSupplierEditText.setText("");
+        mSupplierPhoneEditText.setText("");
     }
 
     /**
@@ -441,5 +461,59 @@ public class EditorActivity extends AppCompatActivity implements LoaderManager.L
 
         // Close the activity
         finish();
+    }
+
+
+    // Decrement BUTTON
+    public void decrement(View view) {
+        //quantity = (EditText) findViewById(R.id.edit_book_quantity);
+        //mQuantityEditText.setText(Integer.toString(quantity));
+
+        String quantityString = mQuantityEditText.getText().toString().trim();
+
+        // If the quantity is not provided by the user, don't try to parse the string into an
+        // integer value. Use 0 by default.
+        if (!TextUtils.isEmpty(quantityString)) {
+            quantity = Integer.parseInt(quantityString);
+        } else {
+            quantity = 0;
+        }
+
+        if (quantity ==  0)  {
+            // Show an error message as a toast
+            Toast.makeText(this, "Quantity cannot be less than 0", Toast.LENGTH_SHORT).show();
+            // Exit early since there's nothing else to do
+            return;
+        }
+        quantity = quantity - 1;
+        displayQuantity(quantity);
+    }
+
+    // Increment BUTTON
+    public void increment(View view) {
+        String quantityString = mQuantityEditText.getText().toString().trim();
+
+        // If the quantity is not provided by the user, don't try to parse the string into an
+        // integer value. Use 0 by default.
+        if (!TextUtils.isEmpty(quantityString)) {
+            quantity = Integer.parseInt(quantityString);
+        } else {
+            quantity = 0;
+        }
+
+        if (quantity == 10) {
+            // Show an error message as a toast
+            Toast.makeText(this, "Maximum is 100", Toast.LENGTH_SHORT).show();
+            // Exit early since there's nothing else to do
+            return;
+        }
+        quantity = quantity + 1;
+        displayQuantity(quantity);
+    }
+
+    /**  This method displays the given quantity value on the screen.  */
+    private void displayQuantity(int number) {
+        EditText quantityEditText = (EditText) findViewById(R.id.edit_book_quantity);
+        quantityEditText.setText("" + number);
     }
 }

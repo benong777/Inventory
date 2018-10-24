@@ -49,6 +49,12 @@
                 android:hint="@string/hint_book_supplier"
                 android:inputType="textCapWords"
                 style="@style/EditorFieldStyle" />
+
+            <!-- Supplier Phone Number field -->
+            <EditText
+                android:id="@+id/edit_book_supplier_phone"
+                android:hint="@string/hint_book_supplier_phone"
+                style="@style/EditorFieldStyle" />
         </LinearLayout>
     </LinearLayout>
 
@@ -78,6 +84,18 @@
                 android:hint="@string/hint_book_quantity"
                 android:inputType="textCapWords"
                 style="@style/EditorFieldStyle" />
+            <Button
+                android:layout_width="48dp"
+                android:layout_height="48dp"
+                android:layout_marginLeft="8dp"
+                android:onClick="decrement"
+                android:text="-" />
+            <Button
+                android:layout_width="48dp"
+                android:layout_height="48dp"
+                android:layout_marginLeft="8dp"
+                android:onClick="increment"
+                android:text="+" />
         </LinearLayout>
     </LinearLayout>
 </LinearLayout>

@@ -64,6 +64,10 @@ public class BookContract {
          ** Type: TEXT  */
         public final static String COLUMN_BOOK_SUPPLIER ="supplier";
 
+        /** Supplier Phone
+         ** Type: TEXT  */
+        public final static String COLUMN_BOOK_SUPPLIER_PHONE ="phone";
+
         /**
          * The MIME type of the {@link #CONTENT_URI} for a list of pets.
          */
