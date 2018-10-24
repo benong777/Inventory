@@ -120,9 +120,6 @@ public class EditorActivity extends AppCompatActivity implements LoaderManager.L
         mSupplierEditText.setOnTouchListener(mTouchListener);
         mSupplierPhoneEditText.setOnTouchListener(mTouchListener);
         mQuantityEditText.setOnTouchListener(mTouchListener);
-
-        //String    currentQuantityString  = mQuantityEditText.getText().toString();
-        //quantity = Integer.parseInt(mQuantityEditText.getText().toString());
     }
 
     /**
@@ -464,6 +461,28 @@ public class EditorActivity extends AppCompatActivity implements LoaderManager.L
     }
 
 
+    // Increment BUTTON
+    public void increment(View view) {
+        String quantityString = mQuantityEditText.getText().toString().trim();
+
+        // If the quantity is not provided by the user, don't try to parse the string into an
+        // integer value. Use 0 by default.
+        if (!TextUtils.isEmpty(quantityString)) {
+            quantity = Integer.parseInt(quantityString);
+        } else {
+            quantity = 0;
+        }
+
+        if (quantity == 10) {
+            // Show an error message as a toast
+            Toast.makeText(this, "Maximum is 100", Toast.LENGTH_SHORT).show();
+            // Exit early since there's nothing else to do
+            return;
+        }
+        quantity = quantity + 1;
+        displayQuantity(quantity);
+    }
+
     // Decrement BUTTON
     public void decrement(View view) {
         //quantity = (EditText) findViewById(R.id.edit_book_quantity);
@@ -489,31 +508,19 @@ public class EditorActivity extends AppCompatActivity implements LoaderManager.L
         displayQuantity(quantity);
     }
 
-    // Increment BUTTON
-    public void increment(View view) {
-        String quantityString = mQuantityEditText.getText().toString().trim();
-
-        // If the quantity is not provided by the user, don't try to parse the string into an
-        // integer value. Use 0 by default.
-        if (!TextUtils.isEmpty(quantityString)) {
-            quantity = Integer.parseInt(quantityString);
-        } else {
-            quantity = 0;
-        }
-
-        if (quantity == 10) {
-            // Show an error message as a toast
-            Toast.makeText(this, "Maximum is 100", Toast.LENGTH_SHORT).show();
-            // Exit early since there's nothing else to do
-            return;
-        }
-        quantity = quantity + 1;
-        displayQuantity(quantity);
-    }
-
     /**  This method displays the given quantity value on the screen.  */
     private void displayQuantity(int number) {
         EditText quantityEditText = (EditText) findViewById(R.id.edit_book_quantity);
         quantityEditText.setText("" + number);
+    }
+
+    // Phone call BUTTON
+    public void phoneCall(View view) {
+        String supplierPhoneString = mSupplierPhoneEditText.getText().toString().trim();
+
+        // Create intent to make a phone call
+        Intent intent = new Intent(Intent.ACTION_DIAL);
+        intent.setData(Uri.parse("tel:" + supplierPhoneString));
+        startActivity(intent);
     }
 }

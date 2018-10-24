@@ -83,7 +83,7 @@
                 android:id="@+id/edit_book_quantity"
                 android:hint="@string/hint_book_quantity"
                 android:inputType="textCapWords"
-                style="@style/EditorFieldStyle" />
+                style="@style/QuantityFieldStyle" />
             <Button
                 android:layout_width="48dp"
                 android:layout_height="48dp"
@@ -96,6 +96,12 @@
                 android:layout_marginLeft="8dp"
                 android:onClick="increment"
                 android:text="+" />
+            <Button
+                android:layout_width="48dp"
+                android:layout_height="48dp"
+                android:layout_marginLeft="8dp"
+                android:onClick="phoneCall"
+                android:text="P" />
         </LinearLayout>
     </LinearLayout>
 </LinearLayout>

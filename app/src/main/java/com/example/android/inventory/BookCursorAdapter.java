@@ -69,9 +69,6 @@ public class BookCursorAdapter extends CursorAdapter {
         // Read the attributes from the Cursor for the current item
         String bookTitle = cursor.getString(titleColumnIndex);
         String bookQuantity = cursor.getString(quantityColumnIndex);
-        //String bookPrice = cursor.getString(priceColumnIndex);
-        //DecimalFormat priceDecimal = new DecimalFormat ("$#.##");
-        //String priceString = priceDecimal.format(bookPrice);
 
         double price = cursor.getDouble(priceColumnIndex);
         DecimalFormat priceDecimal = new DecimalFormat ("$#.##");
