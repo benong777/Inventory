@@ -4,10 +4,18 @@
 
     <!-- Margin -->
     <dimen name="activity_margin">16dp</dimen>
+    <dimen name="quantity_category_top_spacing">24dp</dimen>
+
 
     <!-- Padding -->
     <dimen name="paddingSmall">4dp</dimen>
     <dimen name="paddingMedium">8dp</dimen>
     <dimen name="paddingLarge">16dp</dimen>
     <dimen name="paddingXLarge">24dp</dimen>
+
+    <!-- Increment/Decrement Buttons -->
+    <dimen name="call_button_top_margin">80dp</dimen>
+    <dimen name="button_margin">8dp</dimen>
+    <dimen name="empty_title_top_padding">16dp</dimen>
+    <dimen name="empty_subtitle_top_padding">8dp</dimen>
 </resources>

@@ -32,11 +32,12 @@
     <!-- Label for editor overflow menu option that deletes the current book [CHAR LIMIT=20] -->
     <string name="action_delete">Delete</string>
 
-    <!-- Label for overview category of attributes in the editor [CHAR LIMIT=30] -->
-    <string name="category_overview">Overview</string>
-
-    <!-- Label for the current stock information in the editor [CHAR LIMIT=30] -->
-    <string name="category_stock">Stock</string>
+    <!-- Label for each item in the editor [CHAR LIMIT=30] -->
+    <string name="label_title">Book</string>
+    <string name="label_price">Price\ \ \ </string>
+    <string name="label_supplier">Supplier</string>
+    <string name="label_supplier_phone">Supplier Phone</string>
+    <string name="label_quantity">Stock\ \ \ </string>
 
     <!-- Text hint for name field in the editor [CHAR LIMIT=30] -->
     <string name="hint_book_title">Title</string>
