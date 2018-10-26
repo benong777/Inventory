@@ -53,7 +53,7 @@ public class MainActivity extends AppCompatActivity implements LoaderManager.Loa
         // Find the ListView which will be populated with the data
         ListView bookListView = (ListView) findViewById(R.id.list);
 
-        // Find and set empty view on the ListView, so that it only shows when the list has 0 items.
+        // Find and set empty view on the ListView, so that it only shows when the list has no items.
         View emptyView = findViewById(R.id.empty_view);
         bookListView.setEmptyView(emptyView);
 
@@ -150,6 +150,7 @@ public class MainActivity extends AppCompatActivity implements LoaderManager.Loa
         String[] projection = {
                 BookEntry._ID,                 // _ID needed. CursorAdapter assumes it contains an _id column
                 BookEntry.COLUMN_BOOK_TITLE,
+                BookEntry.COLUMN_BOOK_SUPPLIER,
                 BookEntry.COLUMN_BOOK_PRICE,
                 BookEntry.COLUMN_BOOK_QUANTITY };
 

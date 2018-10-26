@@ -43,8 +43,9 @@ public class EditorActivity extends AppCompatActivity implements LoaderManager.L
     /** Content URI for the existing pet (null if it's a new pet) */
     private Uri mCurrentItemUri;
 
-    /** Global variables */
+    /** General Global variables */
     private int quantity;
+    private boolean allFieldsCompleted;
 
     /** EditText field to enter the book's title */
     private EditText mTitleEditText;
@@ -126,6 +127,9 @@ public class EditorActivity extends AppCompatActivity implements LoaderManager.L
      * Get user input from editor and save new book into database.
      */
     private void saveBook(){
+        // Initialize
+        allFieldsCompleted = true;
+
         // Read from input fields
         // Use trim() to remove leading and trailing whitespaces
         String titleString = mTitleEditText.getText().toString().trim();
@@ -133,6 +137,19 @@ public class EditorActivity extends AppCompatActivity implements LoaderManager.L
         String supplierString = mSupplierEditText.getText().toString().trim();
         String supplierPhoneString = mSupplierPhoneEditText.getText().toString().trim();
         String quantityString = mQuantityEditText.getText().toString().trim();
+
+        // If the required fields are not provided by the user, set error flag
+        if (TextUtils.isEmpty(titleString) || TextUtils.isEmpty(supplierPhoneString)) {
+            allFieldsCompleted = false;
+            return;
+        }
+
+        // If the supplier is not provided by the user, display toast message
+        if (TextUtils.isEmpty(supplierString)) {
+            // Display message
+            Toast.makeText(this, getString(R.string.missing_supplier_message),
+                    Toast.LENGTH_SHORT).show();
+        }
 
         // If the price is not provided by the user, don't try to parse the string into an
         // float value. Use 0 by default.
@@ -146,7 +163,7 @@ public class EditorActivity extends AppCompatActivity implements LoaderManager.L
 
         // If the quantity is not provided by the user, don't try to parse the string into an
         // integer value. Use 0 by default.
-        //int quantity = 0;
+        quantity = 0;
         if (!TextUtils.isEmpty(quantityString)) {
             quantity = Integer.parseInt(quantityString);
         }
@@ -239,8 +256,12 @@ public class EditorActivity extends AppCompatActivity implements LoaderManager.L
             case R.id.action_save:
                 // Save book to database
                 saveBook();
-                // Closes EditorActivity and goes to original Activity
-                finish();
+                if (allFieldsCompleted) {
+                    // Closes EditorActivity and goes to original Activity
+                    finish();
+                } else {
+                    showCheckRequiredFieldsDialog();
+                }
                 return true;
             // Respond to a click on the "Delete" menu option
             case R.id.action_delete:
@@ -376,6 +397,26 @@ public class EditorActivity extends AppCompatActivity implements LoaderManager.L
     }
 
     /**
+     * Prompt the user to fill in the required fields.
+     */
+    private void showCheckRequiredFieldsDialog() {
+        // Create an AlertDialog.Builder and set the message, and click listeners
+        // for the positive and negative buttons on the dialog.
+        AlertDialog.Builder builder = new AlertDialog.Builder(this);
+        builder.setMessage(R.string.required_fields_msg);
+        builder.setPositiveButton(R.string.dialog_ok, new DialogInterface.OnClickListener() {
+            public void onClick(DialogInterface dialog, int id) {
+                // User clicked the "Ok" button, so continue with editing item.
+                saveBook();
+            }
+        });
+
+        // Create and show the AlertDialog
+        AlertDialog alertDialog = builder.create();
+        alertDialog.show();
+    }
+
+    /**
      * Show a dialog that warns the user there are unsaved changes that will be lost
      * if they continue leaving the editor.
      *
@@ -405,7 +446,7 @@ public class EditorActivity extends AppCompatActivity implements LoaderManager.L
     }
 
     /**
-     * Prompt the user to confirm that they want to delete this pet.
+     * Prompt the user to confirm that they want to delete this item.
      */
     private void showDeleteConfirmationDialog() {
         // Create an AlertDialog.Builder and set the message, and click listeners
@@ -434,12 +475,12 @@ public class EditorActivity extends AppCompatActivity implements LoaderManager.L
     }
 
     /**
-     * Perform the deletion of the pet in the database.
+     * Perform the deletion of the item in the database.
      */
     private void deleteBook() {
         // Only perform the delete if this is an existing pet.
         if (mCurrentItemUri != null) {
-            // Call the ContentResolver to delete the pet at the given content URI.
+            // Call the ContentResolver to delete the item at the given content URI.
             // Pass in null for the selection and selection args because the mCurrentItemUri
             // content URI already identifies the item that we want.
             int rowsDeleted = getContentResolver().delete(mCurrentItemUri, null, null);

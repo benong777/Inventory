@@ -35,7 +35,7 @@
     <!-- Label for each item in the editor [CHAR LIMIT=30] -->
     <string name="label_title">Book</string>
     <string name="label_price">Price\ \ \ </string>
-    <string name="label_supplier">Supplier</string>
+    <string name="label_supplier">Supplier\ \ \ </string>
     <string name="label_supplier_phone">Supplier Phone</string>
     <string name="label_quantity">Stock\ \ \ </string>
 
@@ -96,9 +96,19 @@
     <!-- Dialog button text for the option to cancel deletion of the current item [CHAR LIMIT=20] -->
     <string name="cancel">Cancel</string>
 
-    <!-- Label for the title if it is unknown [CHAR LIMIT=20] -->
-    <string name="unknown_title">Unknown Title</string>
+    <!-- Dialog message to ask the user to confirm deleting the current item [CHAR LIMIT=NONE] -->
+    <string name="required_fields_msg">Please fill in the required fields:\nTitle and Supplier Phone number</string>
+
+    <!-- Dialog button text for the option to confirm deleting the current item [CHAR LIMIT=20] -->
+    <string name="dialog_ok">Ok</string>
+
+    <!-- Label for the price if it is unknown [CHAR LIMIT=20] -->
+    <string name="unknown_supplier">Unknown</string>
 
     <!-- Out of Stock Label [CHAR LIMIT=20] -->
     <string name="toast_out_of_stock">Out of Stock</string>
+    <string name="supplier_string_null_message">Supplier field is required</string>
+
+    <!-- Error messages [CHAR LIMIT=50] -->
+    <string name="missing_supplier_message">No supplier provided</string>
 </resources>

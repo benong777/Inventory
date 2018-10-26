@@ -64,26 +64,29 @@ public class BookCursorAdapter extends CursorAdapter {
     public void bindView(View view, final Context context, final Cursor cursor) {
         // Find individual views that we want to modify in the list item layout
         TextView titleTextView = (TextView) view.findViewById(R.id.title);
+        TextView supplierTextView = (TextView) view.findViewById(R.id.supplier);
         TextView priceTextView = (TextView) view.findViewById(R.id.price);
         TextView quantityTextView = (TextView) view.findViewById(R.id.quantity);
 
         // Find the columns of the attributes that we're interested in
         int titleColumnIndex = cursor.getColumnIndex(BookContract.BookEntry.COLUMN_BOOK_TITLE);
+        int supplierColumnIndex = cursor.getColumnIndex(BookEntry.COLUMN_BOOK_SUPPLIER);
         int priceColumnIndex = cursor.getColumnIndex(BookContract.BookEntry.COLUMN_BOOK_PRICE);
         int quantityColumnIndex = cursor.getColumnIndex(BookContract.BookEntry.COLUMN_BOOK_QUANTITY);
 
         // Read the attributes from the Cursor for the current item
         String bookTitle = cursor.getString(titleColumnIndex);
+        String bookSupplier = cursor.getString(supplierColumnIndex);
         final int bookQuantity = cursor.getInt(quantityColumnIndex);
 
         double price = cursor.getDouble(priceColumnIndex);
         DecimalFormat priceDecimal = new DecimalFormat ("$#.##");
         String priceString = priceDecimal.format(price);
 
-        // If the quantity is empty string or null, then use some default text
-        // that says "Unknown breed", so the TextView isn't blank.
-        if (TextUtils.isEmpty(bookTitle)) {
-            bookTitle = context.getString(R.string.unknown_title);
+        // If the supplier is an empty string or null, then use some default text
+        // that says "Unknown supplier", so the TextView isn't blank.
+        if (TextUtils.isEmpty(bookSupplier)) {
+            bookSupplier = context.getString(R.string.unknown_supplier);
         }
 
 
@@ -101,12 +104,6 @@ public class BookCursorAdapter extends CursorAdapter {
                     values.put(BookEntry.COLUMN_BOOK_QUANTITY, bookQuantity - 1);
                     context.getContentResolver().update(currentBookUri, values, null, null);
                     swapCursor(cursor);
-                    /**
-                    // Check if out of stock to display toast
-                    if (quantityColumnIndex == 1) {
-                        Toast.makeText(context, R.string.toast_out_of_stock, Toast.LENGTH_SHORT).show();
-                    }
-                     */
                 }
             }
         });
@@ -114,6 +111,7 @@ public class BookCursorAdapter extends CursorAdapter {
 
         // Update the TextViews with the attributes for the current item
         titleTextView.setText(bookTitle);
+        supplierTextView.setText(bookSupplier);
         priceTextView.setText(priceString);
         quantityTextView.setText(String.valueOf(bookQuantity));
     }
