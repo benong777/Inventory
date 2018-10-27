@@ -54,13 +54,13 @@
     <!-- Text hint for field in the editor [CHAR LIMIT=30] -->
     <string name="hint_book_supplier_phone">Supplier Phone</string>
 
-    <!-- Toast message in editor when new pet has been successfully inserted [CHAR LIMIT=NONE] -->
-    <string name="editor_insert_item_successful">Item saved</string>
+    <!-- Toast message in editor when new item has been successfully inserted [CHAR LIMIT=NONE] -->
+    <string name="editor_insert_item_successful">New item added</string>
 
     <!-- Toast message in editor when new item has failed to be inserted [CHAR LIMIT=NONE] -->
     <string name="editor_insert_item_failed">Error with saving item</string>
 
-    <!-- Toast message in editor when new pet has been successfully updated [CHAR LIMIT=NONE] -->
+    <!-- Toast message in editor when new item has been successfully updated [CHAR LIMIT=NONE] -->
     <string name="editor_update_item_successful">Item updated</string>
 
     <!-- Toast message in editor when new item has failed to be updated [CHAR LIMIT=NONE] -->
@@ -111,4 +111,14 @@
 
     <!-- Error messages [CHAR LIMIT=50] -->
     <string name="missing_supplier_message">No supplier provided</string>
+    <string name="title_null_error">A title is required</string>
+    <string name="supplier_null_error">A supplier name is required</string>
+    <string name="supplier_phone_null_error">A supplier phone number is required</string>
+    <string name="quantity_null_error">The quantity is required</string>
+    <string name="price_null_error">The price is required</string>
+    <string name="missing_required_fields">Please enter in required fields</string>
+
+    <string name="quantity_less_than_0_error_msg">Quantity cannot be less than 0</string>
+    <string name="quantity_max_error_msg">Maximum quantity is 500</string>
+
 </resources>

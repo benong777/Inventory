@@ -8,10 +8,12 @@ import android.database.Cursor;
 import android.database.sqlite.SQLiteDatabase;
 import android.net.Uri;
 import android.util.Log;
+import android.widget.Toast;
 
 import java.security.Provider;
 import java.text.DecimalFormat;
 
+import com.example.android.inventory.R;
 import com.example.android.inventory.data.BookContract.BookEntry;
 
 
@@ -135,20 +137,30 @@ public class BookProvider extends ContentProvider {
         Double price = values.getAsDouble(BookEntry.COLUMN_BOOK_PRICE);
 
         // Check that the title, supplier and phone_num are not NULL!
-        if (title == null) {
-            throw new IllegalArgumentException("The title is required");
+        if (title == null || title.isEmpty()) {
+            //throw new IllegalArgumentException("The title is required");
+            displayErrorToast(getContext().getResources().getString(R.string.title_null_error));
+            return null;
         }
-        if (supplier == null) {
-            throw new IllegalArgumentException("The supplier is required");
+        if (supplier == null || supplier.isEmpty()) {
+            //throw new IllegalArgumentException("The supplier is required");
+            displayErrorToast(getContext().getResources().getString(R.string.supplier_null_error));
+            return null;
         }
-        if (supplier_phone == null) {
-            throw new IllegalArgumentException("The supplier phone number is required");
+        if (supplier_phone == null || supplier_phone.isEmpty()) {
+            //throw new IllegalArgumentException("The supplier phone number is required");
+            displayErrorToast(getContext().getResources().getString(R.string.supplier_phone_null_error));
+            return null;
         }
         if (quantity == null || quantity < 0) {
-            throw new IllegalArgumentException("The quantity must be greater than 0");
+            //throw new IllegalArgumentException("The quantity must be greater than 0");
+            displayErrorToast(getContext().getResources().getString(R.string.quantity_null_error));
+            return null;
         }
         if (price == null || price < 0) {
-            throw new IllegalArgumentException("The quantity must be greater than 0");
+            //throw new IllegalArgumentException("The quantity must be greater than 0");
+            displayErrorToast(getContext().getResources().getString(R.string.price_null_error));
+            return null;
         }
 
         // Get writeable database
@@ -233,6 +245,15 @@ public class BookProvider extends ContentProvider {
                 throw new IllegalArgumentException("The supplier phone number is required");
             }
         }
+        // If the {@link BookEntry#COLUMN_BOOK_QUANTITY} key is present,
+        // check that the quantity value is valid.
+        if (values.containsKey(BookEntry.COLUMN_BOOK_QUANTITY)) {
+            Integer quantity = values.getAsInteger(BookEntry.COLUMN_BOOK_QUANTITY);
+            if (quantity == null || quantity < 0) {
+                throw new IllegalArgumentException("The quantity is required");
+            }
+        }
+
         // If there are no values to update, then don't try to update the database
         if (values.size() == 0) {
             return 0;
@@ -305,5 +326,11 @@ public class BookProvider extends ContentProvider {
             default:
                 throw new IllegalStateException("Unknown URI " + uri + " with match " + match);
         }
+    }
+
+    // Display toast message when an input is null
+    private void displayErrorToast(String field_name) {
+        Toast toast = Toast.makeText(getContext(), field_name, Toast.LENGTH_SHORT);
+        toast.show();
     }
 }

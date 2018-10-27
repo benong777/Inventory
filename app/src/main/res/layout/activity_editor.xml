@@ -87,7 +87,7 @@
             style="@style/QuantityFieldStyle"
             android:gravity="center_horizontal"
             android:hint="@string/hint_book_quantity"
-            android:inputType="textCapWords" />
+            android:inputType="numberDecimal" />
         <Button
             style="@style/ButtonStyle"
             android:layout_marginLeft="@dimen/button_margin"

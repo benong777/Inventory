@@ -37,8 +37,11 @@ import java.text.DecimalFormat;
  */
 public class EditorActivity extends AppCompatActivity implements LoaderManager.LoaderCallbacks<Cursor> {
 
-    /** Identifier for the pet data loader */
+    /** Identifier for the book data loader */
     private static final int EXISTING_PET_LOADER = 0;
+
+    /** Maximum quantity value */
+    private static final int QUANTITY_MAX = 500;
 
     /** Content URI for the existing pet (null if it's a new pet) */
     private Uri mCurrentItemUri;
@@ -138,54 +141,38 @@ public class EditorActivity extends AppCompatActivity implements LoaderManager.L
         String supplierPhoneString = mSupplierPhoneEditText.getText().toString().trim();
         String quantityString = mQuantityEditText.getText().toString().trim();
 
-        // If the required fields are not provided by the user, set error flag
-        if (TextUtils.isEmpty(titleString) || TextUtils.isEmpty(supplierPhoneString)) {
-            allFieldsCompleted = false;
-            return;
-        }
-
-        // If the supplier is not provided by the user, display toast message
-        if (TextUtils.isEmpty(supplierString)) {
-            // Display message
-            Toast.makeText(this, getString(R.string.missing_supplier_message),
-                    Toast.LENGTH_SHORT).show();
-        }
-
-        // If the price is not provided by the user, don't try to parse the string into an
-        // float value. Use 0 by default.
-        double price = 0.00;
-        if (!TextUtils.isEmpty(priceString)) {
-            price = Double.parseDouble(priceString);
-        }
-
-        Log.v("CatalogActivity", "Price: " + price);
-
-
-        // If the quantity is not provided by the user, don't try to parse the string into an
-        // integer value. Use 0 by default.
-        quantity = 0;
-        if (!TextUtils.isEmpty(quantityString)) {
-            quantity = Integer.parseInt(quantityString);
-        }
-
         // Check if this is supposed to be a new item
         // AND check if all the fields in the editor are blank.
         // If so, then exit without saving.
         if (mCurrentItemUri == null && TextUtils.isEmpty(titleString) &&
                 TextUtils.isEmpty(priceString) && TextUtils.isEmpty(supplierString) &&
                 TextUtils.isEmpty(supplierPhoneString) && TextUtils.isEmpty(quantityString)) {
+            allFieldsCompleted = false;
             return;
         }
+
+        if (TextUtils.isEmpty(titleString) ||
+                TextUtils.isEmpty(priceString) || TextUtils.isEmpty(supplierString) ||
+                TextUtils.isEmpty(supplierPhoneString) || TextUtils.isEmpty(quantityString)) {
+            allFieldsCompleted = false;
+            return;
+        }
+
+        // Check for null/empty_string above BEFORE converting to double/int
+        // Otherwise, if it's a null/empty_string, converting to double/int
+        // will result in an error/app_crash
+        double price = Double.parseDouble(priceString);
+        int quantity = Integer.parseInt(quantityString);
 
         // Create a ContentValues object where column names are the keys,
         // and the book attributes are the values.
         ContentValues values = new ContentValues();
         values.put(BookEntry.COLUMN_BOOK_TITLE, titleString);
         values.put(BookEntry.COLUMN_BOOK_PRICE, price);
+        //values.put(BookEntry.COLUMN_BOOK_PRICE, priceString);
         values.put(BookEntry.COLUMN_BOOK_QUANTITY, quantity);
         values.put(BookEntry.COLUMN_BOOK_SUPPLIER, supplierString);
         values.put(BookEntry.COLUMN_BOOK_SUPPLIER_PHONE, supplierPhoneString);
-
 
         // Determine if this is a new or existing item by checking if mCurrentItemUri is null or not
         if (mCurrentItemUri == null) {
@@ -260,8 +247,10 @@ public class EditorActivity extends AppCompatActivity implements LoaderManager.L
                     // Closes EditorActivity and goes to original Activity
                     finish();
                 } else {
-                    showCheckRequiredFieldsDialog();
+                    Toast.makeText(this, getString(R.string.missing_required_fields),
+                    Toast.LENGTH_SHORT).show();
                 }
+                //finish();
                 return true;
             // Respond to a click on the "Delete" menu option
             case R.id.action_delete:
@@ -269,11 +258,7 @@ public class EditorActivity extends AppCompatActivity implements LoaderManager.L
                 showDeleteConfirmationDialog();
                 return true;
             // Respond to a click on the "Up" arrow button in the app bar
-            // ??? Dialog shows up, but goes away. Doesn't allow me to select an option
             case android.R.id.home:
-                // Navigate back to parent activity (CatalogActivity)
-                NavUtils.navigateUpFromSameTask(this);
-
                 // If the item hasn't changed, continue with navigating up to parent activity
                 // which is the {@link MainActivity}.
                 if (!mBookHasChanged) {
@@ -513,13 +498,6 @@ public class EditorActivity extends AppCompatActivity implements LoaderManager.L
         } else {
             quantity = 0;
         }
-
-        if (quantity == 10) {
-            // Show an error message as a toast
-            Toast.makeText(this, "Maximum is 100", Toast.LENGTH_SHORT).show();
-            // Exit early since there's nothing else to do
-            return;
-        }
         quantity = quantity + 1;
         displayQuantity(quantity);
     }
@@ -539,9 +517,9 @@ public class EditorActivity extends AppCompatActivity implements LoaderManager.L
             quantity = 0;
         }
 
-        if (quantity ==  0)  {
+        if (quantity == 0)  {
             // Show an error message as a toast
-            Toast.makeText(this, "Quantity cannot be less than 0", Toast.LENGTH_SHORT).show();
+            Toast.makeText(this, R.string.quantity_less_than_0_error_msg, Toast.LENGTH_SHORT).show();
             // Exit early since there's nothing else to do
             return;
         }
