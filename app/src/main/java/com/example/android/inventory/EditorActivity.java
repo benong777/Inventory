@@ -504,9 +504,6 @@ public class EditorActivity extends AppCompatActivity implements LoaderManager.L
 
     // Decrement BUTTON
     public void decrement(View view) {
-        //quantity = (EditText) findViewById(R.id.edit_book_quantity);
-        //mQuantityEditText.setText(Integer.toString(quantity));
-
         String quantityString = mQuantityEditText.getText().toString().trim();
 
         // If the quantity is not provided by the user, don't try to parse the string into an
